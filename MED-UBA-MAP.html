@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17233d">
+<title>MED UBA MAP · Plan 2009</title>
+<style>
+:root{--bg:#f3f5fa;--paper:#fff;--ink:#17233d;--muted:#66738a;--line:#dce3ee;--navy:#17233d;--blue:#4268e8;--green:#17835e;--amber:#b87918;--purple:#7957b7;--red:#b64e5a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.48 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:linear-gradient(115deg,#17233d,#293e68);color:#fff;padding:22px clamp(14px,3vw,42px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:43px;height:43px;border-radius:13px;background:#ffffff18;display:grid;place-items:center;font-weight:850;font-size:18px;border:1px solid #ffffff35}
+h1{font-size:23px;letter-spacing:.045em;margin:0}header p{margin:3px 0 0;color:#cbd5e5;font-size:12px}.headtag{font-size:11px;color:#d9e2f4;border:1px solid #ffffff40;padding:6px 10px;border-radius:30px}
+main{max-width:1760px;margin:auto;padding:18px clamp(10px,2vw,28px) 40px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stat,.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:0 4px 16px #18233d08}.stat{padding:13px 15px}.statlabel{font-size:11px;color:var(--muted)}.statvalue{font-size:25px;font-weight:780;letter-spacing:-.03em;margin-top:2px}.statnote{font-size:10px;color:var(--muted)}
+.progress{height:7px;border-radius:10px;background:#edf1f7;overflow:hidden;margin-top:8px}.progress>span{display:block;height:100%;width:0;background:var(--green);border-radius:10px;transition:width .2s}
+.toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:14px 0 10px}.toolbar select,.toolbar input,button,.field input,.field select,.field textarea{font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 11px}.toolbar input{min-width:190px;flex:1}button{cursor:pointer;transition:.15s}button:hover{border-color:#91a5cc}button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}button.subtle{background:#f8f9fc}
+.legend{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:9px 0 13px}.legend span{font-size:10px;color:var(--muted);padding:5px 8px;border:1px solid var(--line);border-radius:20px;background:#fff}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:12px;align-items:start}.mapcard{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}.maptop{padding:11px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.maptop strong{font-size:13px}.maptop span{font-size:10px;color:var(--muted)}.mapviewport{height:760px;overflow:auto;background-color:#fbfcfe;background-image:linear-gradient(#eaf0f7 1px,transparent 1px),linear-gradient(90deg,#eaf0f7 1px,transparent 1px);background-size:24px 24px}
+svg{display:block;min-width:1580px}.lane{fill:#f1f4fa;stroke:#e1e7f0;stroke-width:1}.lanetitle{font-size:13px;font-weight:750;fill:#53627a;letter-spacing:.04em}.edge{stroke:#aab7ca;stroke-width:1.6;fill:none;marker-end:url(#arrow);opacity:.85}.edge.dashed{stroke-dasharray:5 4}
+.node{cursor:pointer}.node rect{rx:9;stroke-width:1.5}.node text{pointer-events:none;fill:#23314b;font-size:11px}.node .sub{fill:#65748a;font-size:9px}.node.pending rect{fill:#f6f7fa;stroke:#b8c3d2}.node.inprogress rect{fill:#e9efff;stroke:#6383e9}.node.regular rect{fill:#fff4df;stroke:#c58b31}.node.approved rect{fill:#e1f4eb;stroke:#29936d}.node.available rect{stroke:#315efb;stroke-width:2.5;stroke-dasharray:5 3}.node.selected rect{stroke:#17233d;stroke-width:3}.node.dim{opacity:.16}
+.side{padding:15px;position:sticky;top:10px;max-height:calc(100vh - 20px);overflow:auto}.side h2{font-size:18px;margin:0 0 5px;line-height:1.25}.muted{color:var(--muted)}.tiny{font-size:10px}.pill{display:inline-block;border-radius:20px;background:#eef2f7;color:#56647a;padding:4px 8px;font-size:10px;margin:2px 3px 2px 0}.pill.green{background:#e2f4eb;color:#126b4c}.pill.blue{background:#e8efff;color:#3157c8}.pill.amber{background:#fff2da;color:#85550d}
+.field{margin:11px 0}.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}.field input,.field select,.field textarea{width:100%}.field textarea{min-height:55px;resize:vertical}.rule{border-top:1px solid var(--line);padding-top:10px;margin-top:10px}.rule h3{font-size:12px;margin:0 0 5px}.reqlist{padding-left:18px;margin:5px 0;font-size:11px}.reqlist li{margin:4px 0}.ruletext{font-size:11px;color:var(--muted);margin:5px 0}.notice{padding:10px 11px;border:1px solid #ead9ae;background:#fff9ec;color:#76571f;border-radius:10px;font-size:11px;margin:10px 0}.info{padding:10px 11px;border:1px solid #d8e3f6;background:#f4f7ff;color:#425574;border-radius:10px;font-size:11px;margin:10px 0}
+.actions{display:flex;gap:7px;margin-top:12px}.actions button{flex:1}.lower{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.lower .panel{padding:14px}.lower h3{font-size:13px;margin:0 0 7px}.lower p,.lower li{font-size:11px;color:var(--muted)}.lower ul{padding-left:17px}.source{font-size:10px;color:var(--muted);margin:14px 2px}.source a{color:#3157c8}
+.empty{padding:28px;text-align:center;color:var(--muted);font-size:12px}
+@media(max-width:1050px){.workspace{grid-template-columns:1fr}.side{position:static;max-height:none}.mapviewport{height:650px}}
+@media(max-width:650px){main{padding:12px 9px 30px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.statvalue{font-size:22px}.lower{grid-template-columns:1fr}.toolbar select{flex:1;min-width:130px}.mapviewport{height:570px}header{padding:17px 14px}h1{font-size:20px}}
+</style></head>
+<body>
+<header><div class="brand"><div class="logo">M</div><div><h1>MED UBA MAP</h1><p>Medicina · Universidad de Buenos Aires · Plan 2009</p></div></div><div class="headtag">CBC → Ciclo Biomédico → Ciclo Clínico → IAR</div></header>
+<div style="background:#fff8e8;border-bottom:1px solid #ead9ae;color:#70551f;padding:9px clamp(14px,3vw,42px);font-size:12px;text-align:center"><b>Proyecto independiente y orientativo.</b> No es un sitio oficial de la UBA ni reemplaza la consulta de correlatividades y equivalencias con la Facultad.</div>
+<main>
+<section class="stats">
+ <div class="stat"><div class="statlabel">Materias aprobadas</div><div class="statvalue" id="sApproved">0</div><div class="statnote" id="sTotal">del plan obligatorio</div></div>
+ <div class="stat"><div class="statlabel">Promedio con aplazos</div><div class="statvalue" id="sAverage">—</div><div class="statnote" id="sAttempts">0 notas finales registradas</div></div>
+ <div class="stat"><div class="statlabel">Habilitadas para cursar</div><div class="statvalue" id="sAvailable">0</div><div class="statnote">Según estados y correlativas registradas</div></div>
+ <div class="stat"><div class="statlabel">Avance del plan</div><div class="statvalue" id="sProgress">0%</div><div class="progress"><span id="sBar"></span></div></div>
+</section>
+<div class="toolbar">
+ <select id="cycle"><option value="Todos">Todos los ciclos</option><option value="CBC">CBC</option><option value="Biomédico">Ciclo Biomédico</option><option value="Clínico">Ciclo Clínico</option><option value="IAR">IAR</option><option value="Electivas">Electivas</option></select>
+ <select id="state"><option value="Todos">Todos los estados</option><option value="available">Habilitadas para cursar</option><option value="approved">Aprobadas</option><option value="regular">Regularizadas</option><option value="inprogress">En curso</option><option value="pending">Pendientes</option></select>
+ <input id="search" type="search" placeholder="Buscar materia…">
+ <button class="subtle" id="clear">Limpiar filtros</button>
+ <button class="primary" id="export">Exportar mis datos</button>
+ <button class="subtle" id="importBtn">Importar</button><input id="importFile" type="file" accept=".json" hidden>
+</div>
+<div class="legend">
+ <span><i class="dot" style="background:#29936d"></i>Aprobada</span><span><i class="dot" style="background:#c58b31"></i>Regularizada</span><span><i class="dot" style="background:#6383e9"></i>En curso</span><span><i class="dot" style="background:#b8c3d2"></i>Pendiente</span><span style="border-style:dashed;border-color:#315efb">Borde azul discontinuo: habilitada</span>
+</div>
+<div class="workspace">
+ <section class="mapcard">
+  <div class="maptop"><strong>Mapa curricular interactivo</strong><span>Seleccioná una materia para ver su ficha · desplazate horizontal y verticalmente</span></div>
+  <div class="mapviewport"><svg id="map" viewBox="0 0 1640 1280" role="img" aria-label="Mapa curricular del Plan 2009 de Medicina UBA"></svg></div>
+ </section>
+ <aside class="panel side" id="detail"><h2>Ficha de materia</h2><p class="muted tiny">Seleccioná un nodo del mapa para consultar sus requisitos, registrar tu estado académico y cargar las notas de todos tus intentos de final.</p>
+ <div class="info">El mapa separa correlatividades para cursar y para rendir. Si el Anexo II no establece una condición de final específica, la ficha lo indica expresamente en lugar de inventarla. La habilitación es orientativa: confirmá siempre la situación en los sistemas y canales oficiales de FMED.</div></aside>
+</div>
+<div class="lower">
+ <section class="panel"><h3>Promedio personal de finales registrados</h3><p>Es un cálculo personal de seguimiento, no necesariamente el promedio oficial utilizado por la UBA. Incluye todas las notas finales que cargues, también aplazos (1, 2 y 3), y cuenta cada intento individualmente. Ejemplo: si registrás 2, 4 y 8, se promedian las tres notas. No se incluyen materias sin nota final.</p></section>
+ <section class="panel"><h3>Situaciones especiales del Plan 2009</h3><ul><li>La Resolución CD 1473/2025 establece una transición excepcional para Bioética y Salud Pública de estudiantes del Plan 2009.</li><li>La ficha de esas materias contiene una advertencia para que registres la equivalencia que corresponda a tu trayectoria.</li><li>Las materias electivas se muestran separadas y no se incluyen en el porcentaje de avance obligatorio.</li></ul></section>
+</div>
+<div class="source"><b>Revisión del mapa: 13/11/2026 · Versión 2.0.</b> Las correlatividades generales se estructuran sobre el Plan 2009 y las disposiciones complementarias identificadas. Los regímenes de transición y equivalencias pueden depender de la historia académica individual. Base normativa: <a href="https://www.fmed.uba.ar/sites/default/files/2018-11/Plan%20de%20Estudios%20%28C.S.%29%207591-09.pdf" target="_blank" rel="noopener">Resolución CS 7591/09 (Anexos I y II)</a> · <a href="https://fmed.uba.ar/sites/default/files/2025-08/RESCD-2025-1473-UBA-DCT%23FMED%28Bio%C3%A9tica%20y%20Salud%20P%C3%BAblica%29.pdf" target="_blank" rel="noopener">Resolución CD 1473/2025</a> · <a href="https://www.fmed.uba.ar/actas-certificaciones-y-legalizaciones/programas-de-las-asignaturas" target="_blank" rel="noopener">Programas oficiales de asignaturas</a> · <a href="https://fmed.uba.ar/carreras/medicina/plan-de-estudios-09-res-cs-ndeg-759109-y-modificatoria-recs-2023-640-e-uba-rec" target="_blank" rel="noopener">Página oficial del Plan 2009 y su modificatoria RECS-2023-640-E-UBA-REC</a> · <a href="https://www.fmed.uba.ar/departamentos_y_catedras/departamento-de-salud-publica/catedra-salud-publica-carrera-medicina" target="_blank" rel="noopener">Cátedra de Salud Pública: transición y equivalencias</a>. Para inscripciones, regularidad, finales y equivalencias individuales, prevalece siempre la información vigente de la Facultad y de Dirección de Alumnos.</div>
+</main>
+<script>
+const subjects=[
+{id:'cbc_q',name:'Química',cycle:'CBC',x:25,y:85},
+{id:'cbc_icse',name:'Introducción al Conocimiento de la Sociedad y el Estado',cycle:'CBC',x:25,y:165},
+{id:'cbc_ipc',name:'Introducción al Pensamiento Científico',cycle:'CBC',x:25,y:245},
+{id:'cbc_mat',name:'Matemática',cycle:'CBC',x:25,y:325},
+{id:'cbc_fis',name:'Física e Introducción a la Biofísica',cycle:'CBC',x:25,y:405,course:[['cbc_mat','approved']]},
+{id:'cbc_bio',name:'Biología e Introducción a la Biología Celular',cycle:'CBC',x:25,y:485,course:[['cbc_q','approved']]},
+
+{id:'anato',name:'Anatomía',cycle:'Biomédico',x:270,y:55,course:'CBC_ALL'},
+{id:'histo',name:'Histología, Biología Celular, Embriología y Genética',cycle:'Biomédico',x:270,y:135,course:'CBC_ALL'},
+{id:'sm',name:'Salud Mental',cycle:'Biomédico',x:270,y:215,course:'CBC_ALL'},
+{id:'bio1',name:'Bioética I',cycle:'Biomédico',x:270,y:295,course:'CBC_ALL',transition:'bio1'},
+{id:'mf1',name:'Medicina Familiar I',cycle:'Biomédico',x:270,y:375,course:'CBC_ALL'},
+
+{id:'qb',name:'Química Biológica',cycle:'Biomédico',x:530,y:75,course:[['histo','approved'],['anato','regular']],final:[['histo','approved'],['anato','approved']]},
+{id:'fisiol',name:'Fisiología y Biofísica',cycle:'Biomédico',x:530,y:185,course:[['histo','approved'],['anato','regular']],final:[['histo','approved'],['anato','approved']]},
+
+{id:'inmuno',name:'Inmunología Humana',cycle:'Biomédico',x:790,y:35,course:[['fisiol','regular'],['qb','approved']],final:[['qb','approved'],['fisiol','regular']]},
+{id:'micro1',name:'Microbiología y Parasitología I · General',cycle:'Biomédico',x:790,y:125,course:[['fisiol','regular'],['qb','approved']],final:[['qb','approved'],['fisiol','regular']]},
+{id:'pat1',name:'Patología I',cycle:'Biomédico',x:790,y:215,course:[['fisiol','approved'],['qb','regular']],final:[['qb','approved'],['fisiol','approved']]},
+{id:'farm1',name:'Farmacología I',cycle:'Biomédico',x:790,y:305,course:[['qb','approved'],['fisiol','approved']],final:[['qb','approved'],['fisiol','approved']]},
+{id:'micro2',name:'Microbiología y Parasitología II · Médica',cycle:'Biomédico',x:790,y:395,course:[['fisiol','approved'],['pat1','regular'],['inmuno','regular'],['micro1','regular']],final:[['inmuno','approved'],['micro1','approved']]},
+
+{id:'gate_clin',name:'Habilitación de ingreso al Ciclo Clínico',cycle:'Clínico',x:1060,y:130,kind:'milestone',course:[['pat1','approved'],['farm1','approved'],['inmuno','approved'],['micro1','regular']]},
+{id:'medA',name:'Medicina A · Medicina I',cycle:'Clínico',x:1060,y:245,course:[['pat1','approved'],['farm1','approved'],['inmuno','approved'],['micro1','regular']],final:[['micro2','regular']],description:'Medicina I (Semiología y Fisiopatología). Para rendir su examen final, el régimen complementario aplicable contempla la regularidad de Microbiología y Parasitología II.'},
+{id:'pat2',name:'Patología II',cycle:'Clínico',x:1060,y:355,course:[['pat1','approved'],['farm1','approved'],['inmuno','approved'],['micro1','regular']]},
+{id:'farm2',name:'Farmacología II',cycle:'Clínico',x:1060,y:465,course:[['medA','regular']],description:'Para iniciar la cursada se exige acreditar la regularidad de Medicina I (Medicina A). El Anexo II no agrega una correlativa específica para el final.'},
+{id:'sp1',name:'Salud Pública I',cycle:'Clínico',x:1060,y:575,course:[['pat1','approved'],['farm1','approved'],['inmuno','approved'],['micro1','approved'],['micro2','regular']],transition:'sp1'},
+{id:'sp2',name:'Salud Pública II',cycle:'Clínico',x:1060,y:685,course:[['sp1','regular']],final:[['sp1','approved']],transition:'sp2'},
+{id:'bio2',name:'Bioética II',cycle:'Clínico',x:1060,y:795,course:[['bio1','approved']],transition:'bio2'},
+{id:'psiq',name:'Psiquiatría',cycle:'Clínico',x:1060,y:905,course:[['medA','approved'],['pat2','approved']]},
+{id:'legal',name:'Medicina Legal y Deontología Médica',cycle:'Clínico',x:1060,y:1015,course:[['psiq','approved']]},
+{id:'toxico',name:'Toxicología',cycle:'Clínico',x:1060,y:1125,course:[['medA','approved'],['pat2','approved']]},
+
+{id:'medB',name:'Medicina B · Medicina II (Medicina Interna)',cycle:'Clínico',x:1330,y:30,course:[['medA','approved'],['pat2','approved']]},
+{id:'nutri',name:'Nutrición',cycle:'Clínico',x:1330,y:100,course:[['medA','approved'],['pat2','approved']]},
+{id:'img',name:'Diagnóstico por Imágenes',cycle:'Clínico',x:1330,y:170,course:[['medA','approved'],['pat2','approved']]},
+{id:'derma',name:'Dermatología',cycle:'Clínico',x:1330,y:240,course:[['medA','approved'],['pat2','approved']]},
+{id:'infecto',name:'Enfermedades Infecciosas',cycle:'Clínico',x:1330,y:310,course:[['medA','approved'],['pat2','approved']]},
+{id:'neumo',name:'Neumonología',cycle:'Clínico',x:1330,y:380,course:[['medA','approved'],['pat2','approved']]},
+{id:'neuro',name:'Neurología',cycle:'Clínico',x:1330,y:450,course:[['medA','approved'],['pat2','approved']]},
+{id:'cirugia',name:'Cirugía General',cycle:'Clínico',x:1330,y:520,course:[['medA','approved'],['pat2','approved']]},
+{id:'uro',name:'Urología',cycle:'Clínico',x:1330,y:590,course:[['medA','approved'],['pat2','approved']]},
+{id:'orto',name:'Ortopedia y Traumatología',cycle:'Clínico',x:1330,y:660,course:[['medA','approved'],['pat2','approved']]},
+{id:'oftalmo',name:'Oftalmología',cycle:'Clínico',x:1330,y:730,course:[['medA','approved'],['pat2','approved']]},
+{id:'orl',name:'Otorrinolaringología',cycle:'Clínico',x:1330,y:800,course:[['medA','approved'],['pat2','approved']]},
+{id:'neurocir',name:'Neurocirugía',cycle:'Clínico',x:1330,y:870,course:[['medA','approved'],['pat2','approved']]},
+{id:'obste',name:'Obstetricia',cycle:'Clínico',x:1330,y:940,course:[['medA','approved'],['pat2','approved']]},
+{id:'gine',name:'Ginecología',cycle:'Clínico',x:1330,y:1010,course:[['medA','approved'],['pat2','approved']]},
+{id:'pedia',name:'Pediatría',cycle:'Clínico',x:1330,y:1080,course:[['medA','approved'],['pat2','approved']]},
+
+{id:'iar',name:'Internado Anual Rotatorio (IAR)',cycle:'IAR',x:25,y:620,kind:'milestone',course:'ALL_REQUIRED',description:'Para iniciar el IAR se debe haber aprobado la totalidad de las asignaturas de los ciclos Biomédico y Clínico. Unidades docentes: Clínica Médica, Cirugía, Tocoginecología, Pediatría, Emergentología, Medicina Familiar II y Salud Mental.'},
+
+{id:'elec_bio',name:'Electiva · Bioinformática',cycle:'Electivas',x:270,y:620},
+{id:'elec_ing',name:'Electiva · Inglés',cycle:'Electivas',x:530,y:620},
+{id:'elec_met',name:'Electiva · Metodología de la Investigación',cycle:'Electivas',x:790,y:620}
+];
+
+const byId=id=>subjects.find(s=>s.id===id);
+const cbcIds=['cbc_q','cbc_icse','cbc_ipc','cbc_mat','cbc_fis','cbc_bio'];
+subjects.forEach(s=>{if(s.course==='CBC_ALL')s.course=cbcIds.map(id=>[id,'approved']);});
+const clinicalIds=subjects.filter(s=>s.cycle==='Clínico'&&!['gate_clin'].includes(s.id)).map(s=>s.id);
+const biomedicalIds=subjects.filter(s=>s.cycle==='Biomédico').map(s=>s.id);
+byId('iar').course=[...biomedicalIds,...clinicalIds].map(id=>[id,'approved']);
+
+const KEY='medUbaMapFinal2009_v2';let records={};try{const saved=localStorage.getItem(KEY)||localStorage.getItem('medUbaMapFinal2009_v1')||'{}';records=JSON.parse(saved);localStorage.setItem(KEY,JSON.stringify(records));}catch{}
+let selected=null;
+const status=id=>records[id]?.status||'pending';
+const statusNames={pending:'Pendiente',inprogress:'En curso',regular:'Regularizada',approved:'Aprobada'};
+const reqStatus=(id,need)=>need==='regular'?(status(id)==='regular'||status(id)==='approved'):status(id)==='approved';
+function eligible(s){return Array.isArray(s.course)&&s.course.every(([id,need])=>reqStatus(id,need));}
+function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function requirementLines(req){
+ if(!req||!req.length)return '<li>No se especifica una correlativa adicional en el Anexo II para este requisito.</li>';
+ return req.map(([id,need])=>`<li><b>${escapeHtml(byId(id)?.name||id)}</b> — ${need==='regular'?'regularizada (o aprobada)':'aprobada'}</li>`).join('');
+}
+function currentCourseReq(s){
+ if(s.id==='gate_clin')return [['pat1','approved'],['farm1','approved'],['inmuno','approved'],['micro1','regular']];
+ return s.course;
+}
+function renderMap(){
+ const cycle=document.getElementById('cycle').value,filter=document.getElementById('state').value,q=document.getElementById('search').value.trim().toLowerCase();
+ const visible=subjects.filter(s=>{
+  const st=status(s.id),avail=eligible(s)&&st==='pending';
+  return (cycle==='Todos'||s.cycle===cycle)&&s.name.toLowerCase().includes(q)&&(filter==='Todos'||(filter==='available'?avail:st===filter));
+ });
+ const vis=new Set(visible.map(s=>s.id));let out='<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0 0 L0 6 L6 3z" fill="#aab7ca"/></marker></defs>';
+ out+='<rect class="lane" x="10" y="12" width="215" height="550" rx="13"/><text class="lanetitle" x="24" y="37">CBC</text>';
+ out+='<rect class="lane" x="250" y="12" width="485" height="550" rx="13"/><text class="lanetitle" x="265" y="37">CICLO BIOMÉDICO</text>';
+ out+='<rect class="lane" x="770" y="12" width="530" height="1240" rx="13"/><text class="lanetitle" x="785" y="37">CICLO CLÍNICO · CORRELATIVIDADES</text>';
+ out+='<rect class="lane" x="1315" y="12" width="310" height="1240" rx="13"/><text class="lanetitle" x="1330" y="37">ESPECIALIDADES</text>';
+ out+='<rect class="lane" x="10" y="585" width="960" height="125" rx="13"/><text class="lanetitle" x="25" y="610">IAR Y ELECTIVAS · RECORRIDOS FINALES</text>';
+ subjects.forEach(s=>(s.course||[]).forEach(([pid])=>{
+  if(vis.has(pid)&&vis.has(s.id)){const a=byId(pid);out+=`<path class="edge" d="M${a.x+205} ${a.y+22} C${a.x+225} ${a.y+22},${s.x-20} ${s.y+22},${s.x} ${s.y+22}"/>`;}
+ }));
+ visible.forEach(s=>{
+  const st=status(s.id),avail=eligible(s)&&st==='pending',cls=`node ${st} ${avail?'available':''} ${selected===s.id?'selected':''}`;
+  const title=s.name.length>31?s.name.slice(0,30)+'…':s.name;
+  const stateText=avail?'Habilitada para cursar':statusNames[st];
+  out+=`<g class="${cls}" data-id="${s.id}" transform="translate(${s.x},${s.y})"><rect width="205" height="46"/><text x="9" y="18">${escapeHtml(title)}</text><text class="sub" x="9" y="35">${escapeHtml(s.cycle)} · ${escapeHtml(stateText)}</text></g>`;
+ });
+ const svg=document.getElementById('map');svg.innerHTML=out;svg.querySelectorAll('.node').forEach(n=>n.addEventListener('click',()=>{selected=n.dataset.id;renderMap();renderDetail();}));
+ updateStats();
+}
+function renderDetail(){
+ const s=byId(selected);if(!s)return;const r=records[selected]||{status:'pending',grades:[],date:'',note:''};
+ let course=s.course==='ALL_REQUIRED'?s.course:currentCourseReq(s);
+ const noFinal=s.final===undefined;
+ const transition=s.transition?`<div class="notice"><b>Atención: transición de plan.</b> La Resolución CD 1473/2025 establece un régimen excepcional para estudiantes del Plan 2009 en Bioética y Salud Pública. Según qué materias tengas aprobadas o pendientes, puede corresponder cursar las asignaturas del Plan 2023 y obtener compensaciones. Esta ficha no automatiza esa equivalencia para evitar asignarte una trayectoria incorrecta.</div>`:'';
+ const details=s.description?`<div class="info">${escapeHtml(s.description)}</div>`:'';
+ document.getElementById('detail').innerHTML=`
+ <h2>${escapeHtml(s.name)}</h2><span class="pill">${escapeHtml(s.cycle)}</span>${s.kind==='milestone'?'<span class="pill blue">Hito curricular</span>':''}
+ ${details}${transition}
+ <div class="field"><label>Mi estado académico</label><select id="dStatus"><option value="pending">Pendiente / no cursada</option><option value="inprogress">En curso</option><option value="regular">Regularizada</option><option value="approved">Aprobada</option></select></div>
+ <div class="field"><label>Notas finales · todos los intentos separados por coma</label><input id="dGrades" placeholder="Ej.: 2, 4, 8" value="${escapeHtml((r.grades||[]).join(', '))}"><div class="tiny muted">Ingresá cada nota final una sola vez. Los aplazos también cuentan.</div></div>
+ <div class="field"><label>Fecha del último final (opcional)</label><input id="dDate" type="date" value="${escapeHtml(r.date||'')}"></div>
+ <div class="field"><label>Notas personales (opcional)</label><textarea id="dNote" placeholder="Comisión, cátedra, observaciones…">${escapeHtml(r.note||'')}</textarea></div>
+ <div class="rule"><h3>REQUISITOS PARA CURSAR</h3><ul class="reqlist">${requirementLines(course)}</ul></div>
+ <div class="rule"><h3>REQUISITOS PARA RENDIR FINAL</h3><ul class="reqlist">${noFinal?'<li>El Anexo II no detalla una correlativa específica adicional para el examen final de esta asignatura.</li>':requirementLines(s.final)}</ul></div>
+ <div class="rule"><h3>ESTADO DE HABILITACIÓN</h3><p class="ruletext">${eligible(s)?'Cumplís las correlatividades de cursada cargadas para esta materia. Verificá igualmente las condiciones administrativas y de inscripción de la Facultad.':'Todavía no cumplís todas las correlatividades de cursada cargadas.'}</p></div>
+ <div class="actions"><button class="primary" id="save">Guardar cambios</button><button class="subtle" id="cancel">Cerrar ficha</button></div>
+ <p class="tiny muted">La habilitación se calcula según los estados que vos registrás. Una materia regularizada satisface un requisito de regularidad, pero no uno que exige aprobación.</p>`;
+ document.getElementById('dStatus').value=r.status||'pending';
+ document.getElementById('save').onclick=()=>{
+  const raw=document.getElementById('dGrades').value.trim();
+  const grades=raw?raw.split(',').map(x=>Number(x.trim())):[];
+  if(grades.some(x=>!Number.isInteger(x)||x<1||x>10)){alert('Ingresá notas enteras entre 1 y 10, separadas por comas.');return;}
+  records[selected]={status:document.getElementById('dStatus').value,grades,date:document.getElementById('dDate').value,note:document.getElementById('dNote').value};
+  localStorage.setItem(KEY,JSON.stringify(records));renderMap();renderDetail();
+ };
+ document.getElementById('cancel').onclick=()=>{selected=null;document.getElementById('detail').innerHTML='<h2>Ficha de materia</h2><p class="muted tiny">Seleccioná un nodo del mapa para ver requisitos y registrar tu avance.</p>';renderMap();};
+}
+function updateStats(){
+ const required=subjects.filter(s=>s.cycle!=='Electivas'&&s.kind!=='milestone');
+ const approved=required.filter(s=>status(s.id)==='approved').length;
+ const available=required.filter(s=>status(s.id)==='pending'&&eligible(s)).length;
+ const attempts=Object.values(records).flatMap(r=>r.grades||[]);
+ const average=attempts.length?attempts.reduce((a,b)=>a+b,0)/attempts.length:null;
+ const pct=Math.round(approved/required.length*100);
+ document.getElementById('sApproved').textContent=approved;
+ document.getElementById('sTotal').textContent=`de ${required.length} asignaturas obligatorias`;
+ document.getElementById('sAverage').textContent=average===null?'—':average.toFixed(2);
+ document.getElementById('sAttempts').textContent=`${attempts.length} notas finales registradas · con aplazos`;
+ document.getElementById('sAvailable').textContent=available;
+ document.getElementById('sProgress').textContent=pct+'%';
+ document.getElementById('sBar').style.width=pct+'%';
+}
+['cycle','state'].forEach(id=>document.getElementById(id).addEventListener('change',renderMap));
+document.getElementById('search').addEventListener('input',renderMap);
+document.getElementById('clear').onclick=()=>{document.getElementById('cycle').value='Todos';document.getElementById('state').value='Todos';document.getElementById('search').value='';renderMap();};
+document.getElementById('export').onclick=()=>{const blob=new Blob([JSON.stringify({schema:'med-uba-map-v1',records},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='MED-UBA-MAP-respaldo.json';a.click();URL.revokeObjectURL(url);};
+document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
+document.getElementById('importFile').onchange=async e=>{try{const f=e.target.files?.[0];if(!f)return;const obj=JSON.parse(await f.text());const incoming=obj.records||obj;if(!incoming||typeof incoming!=='object'||Array.isArray(incoming))throw Error();records=incoming;localStorage.setItem(KEY,JSON.stringify(records));renderMap();if(selected)renderDetail();alert('Datos importados correctamente.');}catch{alert('No se pudo importar. Elegí un respaldo JSON válido de MED UBA MAP.');}e.target.value='';};
+renderMap();
+</script></body></html>
